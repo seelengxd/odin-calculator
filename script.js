@@ -18,7 +18,7 @@ const operators = {
     "+": add,
     "-": subtract,
     "÷": divide,
-    "*": multiply
+    "x": multiply
 }
 
 function operate(operator, num1, num2){
@@ -52,11 +52,15 @@ document.querySelector("button[data-value='DEL']").addEventListener("click", del
 
 function equal(){
     if (curr.textContent !== "" && !(curr.textContent in operators)){
+        console.log("in equal")
+        console.log(curr.textContent[0])
+        console.log(curr.textContent[0] in operators)
         if (curr.textContent[0] in operators){
             const num1 = +prev.textContent;
             const num2 = +curr.textContent.slice(1);
             const op = curr.textContent[0];
             const result = +(operate(op, num1, num2).toFixed(6))
+            console.log(result);
             if (result !== Infinity){
                 curr.textContent = result;
                 prev.textContent = "";
@@ -83,7 +87,9 @@ function pressOperator(operator){
     } else if (curr.textContent === ""){
         curr.textContent = operator;
     } else {
+        console.log("reach");
         equal();
+        prev.textContent = curr.textContent;
         curr.textContent = operator;
     }
 }
@@ -114,7 +120,7 @@ const keyToFunction = {
     "9": () => pressNumber("9"),
     "+": () => pressOperator("+"),
     "-": () => pressOperator("-"),
-    "x": () => pressOperator("*"),
+    "x": () => pressOperator("x"),
     "/": () => pressOperator("÷"),
     "Enter": equal,
     ".": pressDot,
